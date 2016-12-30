@@ -17,7 +17,7 @@ Custom select to replace ng-select component
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgSelectorModule } from 'ng2-tree';
+import { NgSelectorModule } from 'ng-selector';
 
 @NgModule({
   declarations: [ ... ],
