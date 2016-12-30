@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+declare var $: any;
 
 import 'selectize/dist/js/standalone/selectize';
 
