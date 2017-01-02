@@ -2,7 +2,7 @@ import { Directive, forwardRef } from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
 @Directive({
-    selector: 'ng-selectize[required][ngModel]',
+    selector: 'ng-selector[required][ngModel]',
     providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => NgSelectorValidator), multi: true }]
 })
 export class NgSelectorValidator implements Validator {
