@@ -3,15 +3,20 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
 @Directive({
     selector: 'ng-selector[required][ngModel]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => NgSelectorValidator), multi: true }]
+    providers: [{ provide: NG_VALIDATORS, useClass: NgSelectorValidator, multi: true }]
 })
 export class NgSelectorValidator implements Validator {
     private isEmpty(value: any) {
         if (value === null || value === undefined) {
             return true;
         }
-        if (value.length && value.length > 0) {
+        // empty array
+        if (Array.isArray(value) && value.length > 0) {
             return false;
+        }
+        // all objects are valids
+        if (!Array.isArray(value) && typeof value === 'object') {
+          return false;
         }
         return true;
     }
