@@ -27,11 +27,6 @@ module.exports = function (config) {
             // RxJs
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
 
-            //jQuery
-            'node_modules/jquery/dist/jquery.js',
-
-            'node_modules/selectize/dist/js/standalone/selectize.js',
-
             { pattern: 'src/**/*.ts' },
         ],
 

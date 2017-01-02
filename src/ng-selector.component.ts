@@ -1,6 +1,5 @@
-declare var $: any;
-
-import 'selectize/dist/js/standalone/selectize';
+import * as jQuery from 'jquery';
+import 'selectize';
 
 import {
   Component,
@@ -93,7 +92,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
 
     // configure Selectize
-    this.selectize = $(this.selector.nativeElement).selectize({
+    this.selectize = jQuery(this.selector.nativeElement).selectize({
       valueField: this.idField,
       labelField: this.labelField,
       searchField: this.labelField,
@@ -104,10 +103,10 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       load: load,
       render: render,
       onChange: this.dataChanged.bind(this)
-    })[0].selectize;
+    } as Selectize.IOptions<any, any>)[0].selectize;
 
     // force form-control on
-    $(this.selector.nativeElement).siblings().find('.selectize-input').addClass('form-control');
+    jQuery(this.selector.nativeElement).siblings().find('.selectize-input').addClass('form-control');
 
     // force refresh data when Selectize is initialized
     this.optionsChanged(this.tmpOptions);
