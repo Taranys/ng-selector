@@ -132,7 +132,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       options.forEach(option => {
         const value = option[this.idField];
         // check if option exist to call the right method ... sorry ... -_-
-        if (this.selectize.options[value][this.idField]) {
+        if (this.selectize.options[value]) {
           this.selectize.updateOption(value, option);
         } else {
           this.selectize.addOption(option);
