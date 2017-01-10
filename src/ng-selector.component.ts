@@ -123,7 +123,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
 
       Object.keys(this.selectize.options)
         .forEach(id => {
-          if (!options.find(elem => elem[this.idField] === id)) {
+          if (!options.find(elem => elem[this.idField] === this.selectize.options[id][this.idField])) {
             this.selectize.removeOption(id);
           }
         })
@@ -132,7 +132,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       options.forEach(option => {
         const value = option[this.idField];
         // check if option exist to call the right method ... sorry ... -_-
-        if (this.selectize.options[this.idField]) {
+        if (this.selectize.options[value][this.idField]) {
           this.selectize.updateOption(value, option);
         } else {
           this.selectize.addOption(option);
