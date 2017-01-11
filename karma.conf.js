@@ -5,7 +5,8 @@ module.exports = function (config) {
         plugins: [
             require('karma-jasmine'),
             require('karma-typescript'),
-            require('karma-chrome-launcher')
+            require('karma-phantomjs-launcher'),
+            require('karma-chrome-launcher'),
         ],
 
         preprocessors: {
@@ -32,6 +33,9 @@ module.exports = function (config) {
 
         reporters: ['progress', 'karma-typescript'],
 
-        browsers: ['Chrome'],
+        browsers: [
+            // 'Chrome',
+            'PhantomJS'
+        ],
     });
 }
