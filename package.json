@@ -3,7 +3,8 @@
   "version": "1.0.5",
   "description": "Angular2 selector component based on selectize.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "test:travis": "karma start --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
