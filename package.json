@@ -1,13 +1,13 @@
 {
   "name": "ng-selector",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Angular2 selector component based on selectize.js",
   "scripts": {
     "test": "karma start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Taranys/ng-selectize.git"
+    "url": "git+https://github.com/Taranys/ng-selector.git"
   },
   "keywords": [
     "angular",
@@ -21,9 +21,9 @@
   "author": "Taranys",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Taranys/ng-selectize/issues"
+    "url": "https://github.com/Taranys/ng-selector/issues"
   },
-  "homepage": "https://github.com/Taranys/ng-selectize#readme",
+  "homepage": "https://github.com/Taranys/ng-selector#readme",
   "dependencies": {
     "@angular/common": "^2.4.1",
     "@angular/core": "^2.4.1",

@@ -15,7 +15,7 @@ export class NgSelectorValidator implements Validator {
             return false;
         }
         // all objects are valids
-        if (!Array.isArray(value) && typeof value === 'object') {
+        if (!Array.isArray(value) && typeof value === 'object' && Object.keys(value).length > 0) {
           return false;
         }
         return true;

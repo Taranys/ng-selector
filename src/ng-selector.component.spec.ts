@@ -57,13 +57,15 @@ describe('Component: Selector', () => {
   it('should change value when an option is selected', () => {
     setOptions(simpleValues);
     selectOption(2);
-    expect(el.querySelector('.item').textContent).toEqual(simpleValues[2].label);
+    expect(selected().item(0).textContent).toEqual(simpleValues[2].label);
   });
 
   it('should select a default values', () => {
+    fixture.detectChanges();
     comp.writeValue(simpleValues[1]);
     setOptions(simpleValues);
     expect(options().length).toBe(simpleValues.length);
+    expect(selected().item(0).textContent).toEqual(simpleValues[1].label);
   });
 
   it('should return an array of values if multiple is enabled', () => {
