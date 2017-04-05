@@ -25,18 +25,18 @@
   },
   "homepage": "https://github.com/Taranys/ng-selectize#readme",
   "dependencies": {
-    "@angular/common": "^2.4.1",
-    "@angular/core": "^2.4.1",
-    "@angular/forms": "^2.4.1",
+    "@angular/common": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
     "@types/jquery": "^2.0.37",
     "@types/selectize": "^0.12.28",
     "jquery": "^3.1.1",
     "selectize": "^0.12.4"
   },
   "devDependencies": {
-    "@angular/compiler": "^2.4.1",
-    "@angular/platform-browser": "^2.4.1",
-    "@angular/platform-browser-dynamic": "^2.4.1",
+    "@angular/compiler": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
     "@types/core-js": "^0.9.35",
     "@types/jasmine": "^2.5.40",
     "core-js": "^2.4.1",
@@ -45,12 +45,12 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.1.0",
-    "karma-typescript": "^2.1.5",
+    "karma-typescript": "^3.0.0",
     "karma-typescript-preprocessor": "^0.3.1",
     "reflect-metadata": "^0.1.9",
     "rxjs": "^5.0.2",
     "systemjs": "^0.19.41",
-    "typescript": "^2.1.4",
-    "zone.js": "^0.7.4"
+    "typescript": "^2.2.2",
+    "zone.js": "^0.8.4"
   }
 }
