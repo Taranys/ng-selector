@@ -1,13 +1,14 @@
 {
   "name": "ng-selector",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Angular2 selector component based on selectize.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "test:travis": "karma start --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Taranys/ng-selectize.git"
+    "url": "git+https://github.com/Taranys/ng-selector.git"
   },
   "keywords": [
     "angular",
@@ -21,9 +22,9 @@
   "author": "Taranys",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Taranys/ng-selectize/issues"
+    "url": "https://github.com/Taranys/ng-selector/issues"
   },
-  "homepage": "https://github.com/Taranys/ng-selectize#readme",
+  "homepage": "https://github.com/Taranys/ng-selector#readme",
   "dependencies": {
     "@angular/common": "^4.0.0",
     "@angular/core": "^4.0.0",
@@ -45,6 +46,7 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2",
     "karma-typescript": "^3.0.0",
     "karma-typescript-preprocessor": "^0.3.1",
     "reflect-metadata": "^0.1.9",

@@ -1,4 +1,4 @@
-# ng-selector
+# ng-selector [![Build Status](https://travis-ci.org/Taranys/ng-selector.png?branch=master)](https://travis-ci.org/Taranys/ng-selector)
 Custom select to replace ng-select component
 
 ## Instalation
