@@ -1,6 +1,6 @@
 {
   "name": "ng-selector",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Angular2 selector component based on selectize.js",
   "scripts": {
     "test": "karma start",
