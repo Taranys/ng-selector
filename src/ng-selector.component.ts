@@ -55,11 +55,12 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     return item;
   };
 
-  constructor( @Attribute('placeholder') private placeholder = '',
-    @Attribute('id-field') private idField = 'id',
-    @Attribute('label-field') private labelField = 'label',
-    @Attribute('multiple') private multiple = false,
-    @Attribute('allow-creation') private allowCreation = true) {
+  constructor(
+    @Attribute('placeholder') public placeholder = '',
+    @Attribute('id-field') public idField = 'id',
+    @Attribute('label-field') public labelField = 'label',
+    @Attribute('multiple') public multiple = false,
+    @Attribute('allow-creation') public allowCreation = true) {
   }
 
   ngAfterViewInit(): any {
