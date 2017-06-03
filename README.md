@@ -40,6 +40,7 @@ export class AppModule { }
       [(ngModel)]="selectedObject"
       [options]="arrayOfObjects"
       [readonly]="disabled"
+      [plugins]="['remove_button']"
       (loadValues)="fetchDataFromServer($event.query, $event.result)"
       (renderer)="render($event.item, $event.html)"
       placeholder="A placeholder..."

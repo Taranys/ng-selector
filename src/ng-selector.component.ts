@@ -35,6 +35,8 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     this.optionsChanged(values)
   };
 
+  @Input() plugins = new Array<string>()
+
   // async input options (function which provide data)
   @Output() loadValues = new EventEmitter<{ query: string, result: (options: Array<any>) => void }>();
   // rendering method to change display of item and options
@@ -92,6 +94,8 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       };
     }
 
+    let plugins = [].concat(this.plugins)
+
     // configure Selectize
     this.selectize = jQuery(this.selector.nativeElement).selectize({
       valueField: this.idField,
@@ -103,6 +107,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       persist: true,
       load: load,
       render: render,
+      plugins: plugins,
       onChange: this.dataChanged.bind(this)
     } as Selectize.IOptions<any, any>)[0].selectize;
 
