@@ -1,6 +1,7 @@
 import { DebugElement } from '@angular/core';
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+
 import { NgSelectorComponent } from './ng-selector.component';
 
 const simpleValues = [
@@ -19,12 +20,12 @@ describe('Component: Selector', () => {
   let de: DebugElement;
   let el: HTMLElement;
 
-  let options = () => el.querySelector('.selectize-dropdown-content').children;
-  let selected = () => el.querySelectorAll('.item');
-  let placeholder = () => el.querySelector('input').attributes.getNamedItem('placeholder').value;
+  const options = () => el.querySelector('.selectize-dropdown-content').children;
+  const selected = () => el.querySelectorAll('.item');
+  const placeholder = () => el.querySelector('input').attributes.getNamedItem('placeholder').value;
 
-  let setOptions = (values) => { comp.options = values; fixture.detectChanges(); };
-  let selectOption = (pos) => { (options().item(pos) as HTMLElement).click(); fixture.detectChanges(); };
+  const setOptions = (values) => { comp.options = values; fixture.detectChanges(); };
+  const selectOption = (pos) => { (options().item(pos) as HTMLElement).click(); fixture.detectChanges(); };
 
   beforeEach(async(() => {
     fixture = TestBed

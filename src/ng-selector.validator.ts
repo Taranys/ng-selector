@@ -1,12 +1,16 @@
-import { Directive, forwardRef } from '@angular/core';
-import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
+import { Directive } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
     selector: 'ng-selector[required][ngModel]',
     providers: [{ provide: NG_VALIDATORS, useClass: NgSelectorValidator, multi: true }]
 })
 export class NgSelectorValidator implements Validator {
-    private isEmpty(value: any) {
+    validate (c: AbstractControl): { [p: string]: any } {
+        return this.isEmpty(c.value) ? { required: { valid: false } } : null;
+    }
+
+    private isEmpty (value: any) {
         if (value === null || value === undefined) {
             return true;
         }
@@ -19,9 +23,5 @@ export class NgSelectorValidator implements Validator {
           return false;
         }
         return true;
-    }
-
-    validate(c: AbstractControl): { [p: string]: any } {
-        return this.isEmpty(c.value) ? { required: { valid: false } } : null;
     }
 }
