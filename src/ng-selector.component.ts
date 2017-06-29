@@ -1,19 +1,18 @@
+import {
+  AfterViewInit,
+  Attribute,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
 import * as jQuery from 'jquery';
 import 'selectize';
-
-import {
-  Component,
-  Input,
-  ViewChild,
-  Attribute,
-  ElementRef,
-  AfterViewInit,
-  forwardRef,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
 @Component({
   selector: 'ng-selector',
@@ -25,13 +24,13 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   // select element
   @ViewChild('selector') selector: ElementRef;
 
-  @Input() set readonly(disabled: boolean) {
+  @Input() set readonly (disabled: boolean) {
     this._disabled = disabled;
     this.checkDisabled();
   };
 
   // array of data
-  @Input() set options(values: Array<any>) {
+  @Input() set options (values: Array<any>) {
     this.optionsChanged(values)
   };
 
@@ -51,21 +50,14 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   private data: any;
   private tmpOptions: any;
 
-  // function to clean object from selectize modifications
-  private cleanOrder = (item: any) => {
-    delete item.$order;
-    return item;
-  };
-
-  constructor(
+  constructor (
     @Attribute('placeholder') public placeholder = '',
     @Attribute('id-field') public idField = 'id',
     @Attribute('label-field') public labelField = 'label',
     @Attribute('multiple') public multiple = false,
-    @Attribute('allow-creation') public allowCreation = true) {
-  }
+    @Attribute('allow-creation') public allowCreation = true) {}
 
-  ngAfterViewInit(): any {
+  ngAfterViewInit (): any {
     // initialize with default values
     this.placeholder = this.placeholder || '';
     this.idField = this.idField || 'id';
@@ -94,7 +86,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       };
     }
 
-    let plugins = [].concat(this.plugins)
+    const plugins = [].concat(this.plugins)
 
     // configure Selectize
     this.selectize = jQuery(this.selector.nativeElement).selectize({
@@ -120,7 +112,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     this.checkDisabled();
   }
 
-  optionsChanged(options) {
+  optionsChanged (options) {
     if (!options || !Object.keys(options).length) {
       return this.selectize && this.selectize.clearOptions();
     }
@@ -150,7 +142,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
   }
 
-  dataChanged(value) {
+  dataChanged (value) {
     if (!value || !value.length) {
       return this.onChange(this.multiple ? [] : null);
     }
@@ -166,10 +158,9 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
   }
 
-  updateData(data) {
-    if (!this.selectize) {
-      return; // component not initialized yet
-    }
+  updateData (data) {
+    // component not initialized yet
+    if (!this.selectize) return;
 
     if (!data) {
       this.selectize.clear();
@@ -184,10 +175,8 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
   }
 
-  checkDisabled() {
-    if (!this.selectize) {
-      return;
-    }
+  checkDisabled () {
+    if (!this.selectize) return;
 
     if (this._disabled === true) {
       this.selectize.disable();
@@ -196,7 +185,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
   }
 
-  rendering(type) {
+  rendering (type) {
     return i => {
       let html = i[this.labelField];
       this.renderer.emit({ val: i, html: htmlContent => html = htmlContent, type });
@@ -208,16 +197,22 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
 
   onTouched = () => { };
 
-  writeValue(value: any): void {
+  writeValue (value: any): void {
     this.updateData(value);
   }
 
-  registerOnChange(fn: (_: any) => void): void {
+  registerOnChange (fn: (_: any) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched (fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  // function to clean object from selectize modifications
+  private cleanOrder (item: any) {
+    delete item.$order;
+    return item;
   }
 
 }
