@@ -1,7 +1,3 @@
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-
 import { NgSelectorValidator } from './ng-selector.validator';
 
 const dummy = { id: 'test', label: 'value' };
