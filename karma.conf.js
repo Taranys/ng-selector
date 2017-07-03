@@ -13,6 +13,13 @@ module.exports = function (config) {
             '**/*.ts': ['karma-typescript']
         },
 
+        karmaTypescriptConfig: {
+            compilerOptions: {
+                "lib": [ "es6", "dom" ],
+                "noStrictGenericChecks": true // workaround needed since typescript 2.4, will be fixed with rxjs 6, see https://stackoverflow.com/questions/44810195/how-do-i-get-around-this-error-in-rxjs-5-x-in-typescript-2-4                
+            }
+        },
+
         files: [
             // Polyfills
             'node_modules/core-js/client/shim.js',

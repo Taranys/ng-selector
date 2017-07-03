@@ -2,7 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { NgSelectorModule } from 'ng-selector';
+import { NgSelectorModule } from '../../../src/ng-selector.module';
 
 import { AppComponent } from './app.component';
 
