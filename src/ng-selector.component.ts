@@ -50,12 +50,12 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   private data: any;
   private tmpOptions: any;
 
-  constructor (
-    @Attribute('placeholder') public placeholder = '',
-    @Attribute('id-field') public idField = 'id',
-    @Attribute('label-field') public labelField = 'label',
-    @Attribute('multiple') public multiple = false,
-    @Attribute('allow-creation') public allowCreation = true) {}
+  @Input('multiple') public multiple = false;
+
+  constructor (@Attribute('placeholder') public placeholder = '',
+               @Attribute('id-field') public idField = 'id',
+               @Attribute('label-field') public labelField = 'label',
+               @Attribute('allow-creation') public allowCreation = true) {}
 
   ngAfterViewInit (): any {
     // initialize with default values
@@ -118,13 +118,12 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
 
     if (this.selectize) {
+      Object.keys(this.selectize.options).forEach(id => {
+        if (!options.find(elem => elem[this.idField] === this.selectize.options[id][this.idField])) {
+          this.selectize.removeOption(id);
+        }
+      });
 
-      Object.keys(this.selectize.options)
-        .forEach(id => {
-          if (!options.find(elem => elem[this.idField] === this.selectize.options[id][this.idField])) {
-            this.selectize.removeOption(id);
-          }
-        })
 
       // this.tagsComponent.options = options;
       options.forEach(option => {
@@ -137,12 +136,14 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
         }
       });
       this.selectize.refreshOptions(false);
+      console.log('options changed : ', this.selectize.options);
     } else {
       this.tmpOptions = options;
     }
   }
 
   dataChanged (value) {
+    console.log('dataChanged : ', value);
     if (!value || !value.length) {
       return this.onChange(this.multiple ? [] : null);
     }
@@ -159,6 +160,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   }
 
   updateData (data) {
+    console.log('updateData : ', data);
     // component not initialized yet
     if (!this.selectize) return;
 
