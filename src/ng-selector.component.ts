@@ -16,7 +16,7 @@ import 'selectize';
 
 @Component({
   selector: 'ng-selector',
-  template: `<select #selector multiple="{{multiple}}"></select>`,
+  template: `<select #selector></select>`,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgSelectorComponent), multi: true }]
 })
 export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor {
@@ -50,7 +50,13 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   private data: any;
   private tmpOptions: any;
 
-  @Input('multiple') public multiple = false;
+  private _mutiple = false
+  @Input('multiple')
+  get multiple () { return this._mutiple; }
+  set multiple (value) {
+    this._mutiple = value;
+    if (this.selectize) this.selectize.maxItems = value ? null : 1;
+  }
 
   constructor (@Attribute('placeholder') public placeholder = '',
                @Attribute('id-field') public idField = 'id',
@@ -94,6 +100,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       labelField: this.labelField,
       searchField: this.labelField,
       placeholder: this.placeholder,
+      maxItems: this.multiple ? null : 1,
       create: this.allowCreation,
       selectOnTab: true,
       persist: true,
@@ -136,14 +143,12 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
         }
       });
       this.selectize.refreshOptions(false);
-      console.log('options changed : ', this.selectize.options);
     } else {
       this.tmpOptions = options;
     }
   }
 
   dataChanged (value) {
-    console.log('dataChanged : ', value);
     if (!value || !value.length) {
       return this.onChange(this.multiple ? [] : null);
     }
@@ -160,7 +165,6 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   }
 
   updateData (data) {
-    console.log('updateData : ', data);
     // component not initialized yet
     if (!this.selectize) return;
 
