@@ -55,7 +55,8 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   get multiple () { return this._mutiple; }
   set multiple (value) {
     this._mutiple = value;
-    this.selectize.maxItems = this.checkMultipleFalsy();
+    // this.selectize.maxItems = this.multiple ? null : 1,
+    if (this.selectize) this.selectize.maxItems = this.checkMultipleFalsy();
   }
 
   constructor (@Attribute('placeholder') public placeholder = '',
