@@ -16,7 +16,7 @@ import 'selectize';
 
 @Component({
   selector: 'ng-selector',
-  template: `<select #selector multiple="{{multiple}}"></select>`,
+  template: `<select #selector></select>`,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgSelectorComponent), multi: true }]
 })
 export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor {
@@ -50,12 +50,19 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   private data: any;
   private tmpOptions: any;
 
-  constructor (
-    @Attribute('placeholder') public placeholder = '',
-    @Attribute('id-field') public idField = 'id',
-    @Attribute('label-field') public labelField = 'label',
-    @Attribute('multiple') public multiple = false,
-    @Attribute('allow-creation') public allowCreation = true) {}
+  private _mutiple = false
+  @Input('multiple')
+  get multiple () { return this._mutiple; }
+  set multiple (value) {
+    this._mutiple = value;
+    // this.selectize.maxItems = this.multiple ? null : 1,
+    if (this.selectize) this.selectize.maxItems = this.checkMultipleFalsy();
+  }
+
+  constructor (@Attribute('placeholder') public placeholder = '',
+               @Attribute('id-field') public idField = 'id',
+               @Attribute('label-field') public labelField = 'label',
+               @Attribute('allow-creation') public allowCreation = true) {}
 
   ngAfterViewInit (): any {
     // initialize with default values
@@ -94,6 +101,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       labelField: this.labelField,
       searchField: this.labelField,
       placeholder: this.placeholder,
+      maxItems: this.checkMultipleFalsy(),
       create: this.allowCreation,
       selectOnTab: true,
       persist: true,
@@ -118,13 +126,12 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
 
     if (this.selectize) {
+      Object.keys(this.selectize.options).forEach(id => {
+        if (!options.find(elem => elem[this.idField] === this.selectize.options[id][this.idField])) {
+          this.selectize.removeOption(id);
+        }
+      });
 
-      Object.keys(this.selectize.options)
-        .forEach(id => {
-          if (!options.find(elem => elem[this.idField] === this.selectize.options[id][this.idField])) {
-            this.selectize.removeOption(id);
-          }
-        })
 
       // this.tagsComponent.options = options;
       options.forEach(option => {
@@ -213,6 +220,10 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   private cleanOrder (item: any) {
     delete item.$order;
     return item;
+  }
+
+  private checkMultipleFalsy () {
+    return (this.multiple) ? null : 1;
   }
 
 }
