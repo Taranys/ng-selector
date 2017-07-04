@@ -55,7 +55,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   get multiple () { return this._mutiple; }
   set multiple (value) {
     this._mutiple = value;
-    if (this.selectize) this.selectize.maxItems = value ? null : 1;
+    this.selectize.maxItems = this.checkMultipleFalsy();
   }
 
   constructor (@Attribute('placeholder') public placeholder = '',
@@ -100,7 +100,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       labelField: this.labelField,
       searchField: this.labelField,
       placeholder: this.placeholder,
-      maxItems: this.multiple ? null : 1,
+      maxItems: this.checkMultipleFalsy(),
       create: this.allowCreation,
       selectOnTab: true,
       persist: true,
@@ -219,6 +219,10 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   private cleanOrder (item: any) {
     delete item.$order;
     return item;
+  }
+
+  private checkMultipleFalsy () {
+    return (this.multiple) ? null : 1;
   }
 
 }
