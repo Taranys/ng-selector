@@ -24,6 +24,7 @@
     "bootstrap": "^4.0.0-beta.2",
     "core-js": "^2.4.1",
     "jquery": "^3.2.1",
+    "ng-selector": "file:..",
     "rxjs": "^5.5.2",
     "selectize": "^0.12.4",
     "zone.js": "^0.8.14"

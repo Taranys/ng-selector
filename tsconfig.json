@@ -12,5 +12,8 @@
     ],
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true
-  }
+  },
+  "include": [
+    "src"
+  ]
 }
