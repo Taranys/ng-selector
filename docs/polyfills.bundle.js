@@ -1,26 +1,5 @@
 webpackJsonp([0],{
 
-/***/ "./node_modules/core-js/es6/reflect.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.apply.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.construct.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.define-property.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.delete-property.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.enumerate.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.get.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.get-prototype-of.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.has.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.is-extensible.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.own-keys.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.prevent-extensions.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.set.js");
-__webpack_require__("./node_modules/core-js/modules/es6.reflect.set-prototype-of.js");
-module.exports = __webpack_require__("./node_modules/core-js/modules/_core.js").Reflect;
-
-/***/ }),
-
 /***/ "./node_modules/core-js/es7/reflect.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -191,37 +170,6 @@ var speciesConstructor = __webpack_require__("./node_modules/core-js/modules/_ar
 
 module.exports = function(original, length){
   return new (speciesConstructor(original))(length);
-};
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/_bind.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var aFunction  = __webpack_require__("./node_modules/core-js/modules/_a-function.js")
-  , isObject   = __webpack_require__("./node_modules/core-js/modules/_is-object.js")
-  , invoke     = __webpack_require__("./node_modules/core-js/modules/_invoke.js")
-  , arraySlice = [].slice
-  , factories  = {};
-
-var construct = function(F, len, args){
-  if(!(len in factories)){
-    for(var n = [], i = 0; i < len; i++)n[i] = 'a[' + i + ']';
-    factories[len] = Function('F,a', 'return new F(' + n.join(',') + ')');
-  } return factories[len](F, args);
-};
-
-module.exports = Function.bind || function bind(that /*, args... */){
-  var fn       = aFunction(this)
-    , partArgs = arraySlice.call(arguments, 1);
-  var bound = function(/* args... */){
-    var args = partArgs.concat(arraySlice.call(arguments));
-    return this instanceof bound ? construct(fn, args.length, args) : invoke(fn, args, that);
-  };
-  if(isObject(fn.prototype))bound.prototype = fn.prototype;
-  return bound;
 };
 
 /***/ }),
@@ -832,28 +780,6 @@ module.exports = function(that, target, C){
 
 /***/ }),
 
-/***/ "./node_modules/core-js/modules/_invoke.js":
-/***/ (function(module, exports) {
-
-// fast apply, http://jsperf.lnkit.com/fast-apply/5
-module.exports = function(fn, args, that){
-  var un = that === undefined;
-  switch(args.length){
-    case 0: return un ? fn()
-                      : fn.call(that);
-    case 1: return un ? fn(args[0])
-                      : fn.call(that, args[0]);
-    case 2: return un ? fn(args[0], args[1])
-                      : fn.call(that, args[0], args[1]);
-    case 3: return un ? fn(args[0], args[1], args[2])
-                      : fn.call(that, args[0], args[1], args[2]);
-    case 4: return un ? fn(args[0], args[1], args[2], args[3])
-                      : fn.call(that, args[0], args[1], args[2], args[3]);
-  } return              fn.apply(that, args);
-};
-
-/***/ }),
-
 /***/ "./node_modules/core-js/modules/_iobject.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1331,19 +1257,6 @@ exports.f = __webpack_require__("./node_modules/core-js/modules/_descriptors.js"
 
 /***/ }),
 
-/***/ "./node_modules/core-js/modules/_object-gopn.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys      = __webpack_require__("./node_modules/core-js/modules/_object-keys-internal.js")
-  , hiddenKeys = __webpack_require__("./node_modules/core-js/modules/_enum-bug-keys.js").concat('length', 'prototype');
-
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
-  return $keys(O, hiddenKeys);
-};
-
-/***/ }),
-
 /***/ "./node_modules/core-js/modules/_object-gops.js":
 /***/ (function(module, exports) {
 
@@ -1410,22 +1323,6 @@ module.exports = Object.keys || function keys(O){
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/_own-keys.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// all object keys, includes non-enumerable and symbols
-var gOPN     = __webpack_require__("./node_modules/core-js/modules/_object-gopn.js")
-  , gOPS     = __webpack_require__("./node_modules/core-js/modules/_object-gops.js")
-  , anObject = __webpack_require__("./node_modules/core-js/modules/_an-object.js")
-  , Reflect  = __webpack_require__("./node_modules/core-js/modules/_global.js").Reflect;
-module.exports = Reflect && Reflect.ownKeys || function ownKeys(it){
-  var keys       = gOPN.f(anObject(it))
-    , getSymbols = gOPS.f;
-  return getSymbols ? keys.concat(getSymbols(it)) : keys;
-};
 
 /***/ }),
 
@@ -1720,339 +1617,6 @@ module.exports = __webpack_require__("./node_modules/core-js/modules/_collection
     return strong.def(this, key === 0 ? 0 : key, value);
   }
 }, strong, true);
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.apply.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
-var $export   = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , aFunction = __webpack_require__("./node_modules/core-js/modules/_a-function.js")
-  , anObject  = __webpack_require__("./node_modules/core-js/modules/_an-object.js")
-  , rApply    = (__webpack_require__("./node_modules/core-js/modules/_global.js").Reflect || {}).apply
-  , fApply    = Function.apply;
-// MS Edge argumentsList argument is optional
-$export($export.S + $export.F * !__webpack_require__("./node_modules/core-js/modules/_fails.js")(function(){
-  rApply(function(){});
-}), 'Reflect', {
-  apply: function apply(target, thisArgument, argumentsList){
-    var T = aFunction(target)
-      , L = anObject(argumentsList);
-    return rApply ? rApply(T, thisArgument, L) : fApply.call(T, thisArgument, L);
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.construct.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
-var $export    = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , create     = __webpack_require__("./node_modules/core-js/modules/_object-create.js")
-  , aFunction  = __webpack_require__("./node_modules/core-js/modules/_a-function.js")
-  , anObject   = __webpack_require__("./node_modules/core-js/modules/_an-object.js")
-  , isObject   = __webpack_require__("./node_modules/core-js/modules/_is-object.js")
-  , fails      = __webpack_require__("./node_modules/core-js/modules/_fails.js")
-  , bind       = __webpack_require__("./node_modules/core-js/modules/_bind.js")
-  , rConstruct = (__webpack_require__("./node_modules/core-js/modules/_global.js").Reflect || {}).construct;
-
-// MS Edge supports only 2 arguments and argumentsList argument is optional
-// FF Nightly sets third argument as `new.target`, but does not create `this` from it
-var NEW_TARGET_BUG = fails(function(){
-  function F(){}
-  return !(rConstruct(function(){}, [], F) instanceof F);
-});
-var ARGS_BUG = !fails(function(){
-  rConstruct(function(){});
-});
-
-$export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
-  construct: function construct(Target, args /*, newTarget*/){
-    aFunction(Target);
-    anObject(args);
-    var newTarget = arguments.length < 3 ? Target : aFunction(arguments[2]);
-    if(ARGS_BUG && !NEW_TARGET_BUG)return rConstruct(Target, args, newTarget);
-    if(Target == newTarget){
-      // w/o altered newTarget, optimization for 0-4 arguments
-      switch(args.length){
-        case 0: return new Target;
-        case 1: return new Target(args[0]);
-        case 2: return new Target(args[0], args[1]);
-        case 3: return new Target(args[0], args[1], args[2]);
-        case 4: return new Target(args[0], args[1], args[2], args[3]);
-      }
-      // w/o altered newTarget, lot of arguments case
-      var $args = [null];
-      $args.push.apply($args, args);
-      return new (bind.apply(Target, $args));
-    }
-    // with altered newTarget, not support built-in constructors
-    var proto    = newTarget.prototype
-      , instance = create(isObject(proto) ? proto : Object.prototype)
-      , result   = Function.apply.call(Target, instance, args);
-    return isObject(result) ? result : instance;
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.define-property.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
-var dP          = __webpack_require__("./node_modules/core-js/modules/_object-dp.js")
-  , $export     = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , anObject    = __webpack_require__("./node_modules/core-js/modules/_an-object.js")
-  , toPrimitive = __webpack_require__("./node_modules/core-js/modules/_to-primitive.js");
-
-// MS Edge has broken Reflect.defineProperty - throwing instead of returning false
-$export($export.S + $export.F * __webpack_require__("./node_modules/core-js/modules/_fails.js")(function(){
-  Reflect.defineProperty(dP.f({}, 1, {value: 1}), 1, {value: 2});
-}), 'Reflect', {
-  defineProperty: function defineProperty(target, propertyKey, attributes){
-    anObject(target);
-    propertyKey = toPrimitive(propertyKey, true);
-    anObject(attributes);
-    try {
-      dP.f(target, propertyKey, attributes);
-      return true;
-    } catch(e){
-      return false;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.delete-property.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.4 Reflect.deleteProperty(target, propertyKey)
-var $export  = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , gOPD     = __webpack_require__("./node_modules/core-js/modules/_object-gopd.js").f
-  , anObject = __webpack_require__("./node_modules/core-js/modules/_an-object.js");
-
-$export($export.S, 'Reflect', {
-  deleteProperty: function deleteProperty(target, propertyKey){
-    var desc = gOPD(anObject(target), propertyKey);
-    return desc && !desc.configurable ? false : delete target[propertyKey];
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.enumerate.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 26.1.5 Reflect.enumerate(target)
-var $export  = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , anObject = __webpack_require__("./node_modules/core-js/modules/_an-object.js");
-var Enumerate = function(iterated){
-  this._t = anObject(iterated); // target
-  this._i = 0;                  // next index
-  var keys = this._k = []       // keys
-    , key;
-  for(key in iterated)keys.push(key);
-};
-__webpack_require__("./node_modules/core-js/modules/_iter-create.js")(Enumerate, 'Object', function(){
-  var that = this
-    , keys = that._k
-    , key;
-  do {
-    if(that._i >= keys.length)return {value: undefined, done: true};
-  } while(!((key = keys[that._i++]) in that._t));
-  return {value: key, done: false};
-});
-
-$export($export.S, 'Reflect', {
-  enumerate: function enumerate(target){
-    return new Enumerate(target);
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
-var gOPD     = __webpack_require__("./node_modules/core-js/modules/_object-gopd.js")
-  , $export  = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , anObject = __webpack_require__("./node_modules/core-js/modules/_an-object.js");
-
-$export($export.S, 'Reflect', {
-  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, propertyKey){
-    return gOPD.f(anObject(target), propertyKey);
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.get-prototype-of.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.8 Reflect.getPrototypeOf(target)
-var $export  = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , getProto = __webpack_require__("./node_modules/core-js/modules/_object-gpo.js")
-  , anObject = __webpack_require__("./node_modules/core-js/modules/_an-object.js");
-
-$export($export.S, 'Reflect', {
-  getPrototypeOf: function getPrototypeOf(target){
-    return getProto(anObject(target));
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.get.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.6 Reflect.get(target, propertyKey [, receiver])
-var gOPD           = __webpack_require__("./node_modules/core-js/modules/_object-gopd.js")
-  , getPrototypeOf = __webpack_require__("./node_modules/core-js/modules/_object-gpo.js")
-  , has            = __webpack_require__("./node_modules/core-js/modules/_has.js")
-  , $export        = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , isObject       = __webpack_require__("./node_modules/core-js/modules/_is-object.js")
-  , anObject       = __webpack_require__("./node_modules/core-js/modules/_an-object.js");
-
-function get(target, propertyKey/*, receiver*/){
-  var receiver = arguments.length < 3 ? target : arguments[2]
-    , desc, proto;
-  if(anObject(target) === receiver)return target[propertyKey];
-  if(desc = gOPD.f(target, propertyKey))return has(desc, 'value')
-    ? desc.value
-    : desc.get !== undefined
-      ? desc.get.call(receiver)
-      : undefined;
-  if(isObject(proto = getPrototypeOf(target)))return get(proto, propertyKey, receiver);
-}
-
-$export($export.S, 'Reflect', {get: get});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.has.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.9 Reflect.has(target, propertyKey)
-var $export = __webpack_require__("./node_modules/core-js/modules/_export.js");
-
-$export($export.S, 'Reflect', {
-  has: function has(target, propertyKey){
-    return propertyKey in target;
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.is-extensible.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.10 Reflect.isExtensible(target)
-var $export       = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , anObject      = __webpack_require__("./node_modules/core-js/modules/_an-object.js")
-  , $isExtensible = Object.isExtensible;
-
-$export($export.S, 'Reflect', {
-  isExtensible: function isExtensible(target){
-    anObject(target);
-    return $isExtensible ? $isExtensible(target) : true;
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.own-keys.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.11 Reflect.ownKeys(target)
-var $export = __webpack_require__("./node_modules/core-js/modules/_export.js");
-
-$export($export.S, 'Reflect', {ownKeys: __webpack_require__("./node_modules/core-js/modules/_own-keys.js")});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.prevent-extensions.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.12 Reflect.preventExtensions(target)
-var $export            = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , anObject           = __webpack_require__("./node_modules/core-js/modules/_an-object.js")
-  , $preventExtensions = Object.preventExtensions;
-
-$export($export.S, 'Reflect', {
-  preventExtensions: function preventExtensions(target){
-    anObject(target);
-    try {
-      if($preventExtensions)$preventExtensions(target);
-      return true;
-    } catch(e){
-      return false;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.set-prototype-of.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.14 Reflect.setPrototypeOf(target, proto)
-var $export  = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , setProto = __webpack_require__("./node_modules/core-js/modules/_set-proto.js");
-
-if(setProto)$export($export.S, 'Reflect', {
-  setPrototypeOf: function setPrototypeOf(target, proto){
-    setProto.check(target, proto);
-    try {
-      setProto.set(target, proto);
-      return true;
-    } catch(e){
-      return false;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es6.reflect.set.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
-var dP             = __webpack_require__("./node_modules/core-js/modules/_object-dp.js")
-  , gOPD           = __webpack_require__("./node_modules/core-js/modules/_object-gopd.js")
-  , getPrototypeOf = __webpack_require__("./node_modules/core-js/modules/_object-gpo.js")
-  , has            = __webpack_require__("./node_modules/core-js/modules/_has.js")
-  , $export        = __webpack_require__("./node_modules/core-js/modules/_export.js")
-  , createDesc     = __webpack_require__("./node_modules/core-js/modules/_property-desc.js")
-  , anObject       = __webpack_require__("./node_modules/core-js/modules/_an-object.js")
-  , isObject       = __webpack_require__("./node_modules/core-js/modules/_is-object.js");
-
-function set(target, propertyKey, V/*, receiver*/){
-  var receiver = arguments.length < 4 ? target : arguments[3]
-    , ownDesc  = gOPD.f(anObject(target), propertyKey)
-    , existingDescriptor, proto;
-  if(!ownDesc){
-    if(isObject(proto = getPrototypeOf(target))){
-      return set(proto, propertyKey, V, receiver);
-    }
-    ownDesc = createDesc(0);
-  }
-  if(has(ownDesc, 'value')){
-    if(ownDesc.writable === false || !isObject(receiver))return false;
-    existingDescriptor = gOPD.f(receiver, propertyKey) || createDesc(0);
-    existingDescriptor.value = V;
-    dP.f(receiver, propertyKey, existingDescriptor);
-    return true;
-  }
-  return ownDesc.set === undefined ? false : (ownDesc.set.call(receiver, V), true);
-}
-
-$export($export.S, 'Reflect', {set: set});
 
 /***/ }),
 
@@ -4660,12 +4224,10 @@ Zone.__load_patch('util', function (global, Zone, api) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_es6_reflect__ = __webpack_require__("./node_modules/core-js/es6/reflect.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_es6_reflect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_core_js_es6_reflect__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_core_js_es7_reflect__ = __webpack_require__("./node_modules/core-js/es7/reflect.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_core_js_es7_reflect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_core_js_es7_reflect__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_zone_js_dist_zone__ = __webpack_require__("./node_modules/zone.js/dist/zone.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_zone_js_dist_zone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_zone_js_dist_zone__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_es7_reflect__ = __webpack_require__("./node_modules/core-js/es7/reflect.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_es7_reflect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_core_js_es7_reflect__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_zone_js_dist_zone__ = __webpack_require__("./node_modules/zone.js/dist/zone.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_zone_js_dist_zone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_zone_js_dist_zone__);
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
@@ -4701,29 +4263,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // import 'core-js/es6/set';
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
-/** IE10 and IE11 requires the following to support `@angular/animation`. */
-// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
+/** IE10 and IE11 requires the following for the Reflect API. */
+// import 'core-js/es6/reflect';
 /** Evergreen browsers require these. **/
+// Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
 
-
-/** ALL Firefox browsers require the following to support `@angular/animation`. **/
+/**
+ * Required to support Web Animations `@angular/platform-browser/animations`.
+ * Needed for: All but Chrome, Firefox and Opera. http://caniuse.com/#feat=web-animation
+ **/
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 /***************************************************************************************************
- * Zone JS is required by Angular itself.
+ * Zone JS is required by default for Angular itself.
  */
  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-/**
- * Date, currency, decimal and percent pipes.
- * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10
- */
-// import 'intl';  // Run `npm install --save intl`.
-/**
- * Need to import at least one locale-data with intl.
- */
-// import 'intl/locale-data/jsonp/en';
 //# sourceMappingURL=polyfills.js.map
 
 /***/ }),

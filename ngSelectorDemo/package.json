@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -aot",
-    "build": "ng build -d ng-selector",
+    "start": "ng serve --aot",
+    "build": "ng build --build-optimizer --aot",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

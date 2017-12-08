@@ -1,20 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "paths": {
-      "ng-selector": [
-        "../../src/index.ts"
-      ],
-      "@angular/*": [
-        "../node_modules/@angular/*"
-      ]
-    },
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
