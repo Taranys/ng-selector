@@ -1,12 +1,12 @@
 # Node
 node_modules/*
-src/node_modules/*
 npm-debug.log
-
+docs/*
+# DO NOT IGNORE TYPESCRIPT FILES FOR NPM
 # TypeScript
-src/*.js
-src/*.map
-src/*.d.ts
+# *.js
+# *.map
+# *.d.ts
 
 # JetBrains
 .idea
@@ -28,10 +28,7 @@ Desktop.ini
 
 # Ngc generated files
 **/*.ngfactory.ts
-.tmp
 
-# Build files
-dist/*
-
-# Playground tmp files
-.playground
+# Library files
+src/*
+build/*

@@ -7,7 +7,7 @@ Example available on : https://taranys.github.io/ng-selector/
 
 1. Install NgSelector
 
-  `npm i --save ng-selector`
+  `npm i ng-selector jquery selectize`
 
 2. Include Selectize CSS into your project
 
@@ -100,7 +100,7 @@ export class AppComponent {
 ### Multiple selection
 
 ```html
-  <ng-selector name="selector" [(ngModel)]="selected" [options]="values" 
+  <ng-selector name="selector" [(ngModel)]="selected" [options]="values"
       multiple="true" placeholder="Choose any values you want...">
   </ng-selector>
 ```
@@ -164,3 +164,7 @@ export class AppComponent {
 ```html
   <ng-selector name="selector" [(ngModel)]="selected" (renderer)="customRendering($event)"></ng-selector>
 ```
+
+# Thanks
+
+Thanks to [Generator angular library](https://www.npmjs.com/package/generator-angular2-library) for this awesome generator :)
