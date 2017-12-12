@@ -1,0 +1,39 @@
+{
+  "name": "ng-selector",
+  "version": "2.2.0",
+  "description": "Angular2 selector component based on selectize.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taranys/ng-selector.git"
+  },
+  "author": {
+    "name": "Taranys"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular4",
+    "angular5",
+    "selectize.js",
+    "select2",
+    "select",
+    "ng-select",
+    "component"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Taranys/ng-selector/issues"
+  },
+  "main": "ng-selector.umd.js",
+  "module": "ng-selector.js",
+  "jsnext:main": "ng-selector.js",
+  "typings": "ng-selector.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "@angular/forms": "^5.0.0",
+    "jquery": ">=3.0.0",
+    "selectize": ">=0.12.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  }
+}
