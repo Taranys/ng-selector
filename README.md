@@ -7,7 +7,7 @@ Example available on : https://taranys.github.io/ng-selector/
 
 1. Install NgSelector
 
-  `npm i ng-selector`
+  `npm i ng-selector jquery selectize`
 
 2. Include Selectize CSS into your project
 
