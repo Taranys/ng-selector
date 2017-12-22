@@ -41,7 +41,8 @@ module.exports = function (config) {
         reporters: ['progress', 'karma-typescript'],
 
         browsers: [
-            'Chrome',
+            // 'Chrome',
+            'PhantomJS',
         ],
     });
 }

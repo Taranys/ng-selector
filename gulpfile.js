@@ -77,6 +77,8 @@ gulp.task('rollup:fesm', function () {
       // A list of IDs of modules that should remain external to the bundle
       // See "external" in https://rollupjs.org/#core-functionality
       external: [
+        'jquery',
+        'selectize',
         '@angular/core',
         '@angular/common',
         '@angular/forms',
@@ -111,6 +113,8 @@ gulp.task('rollup:umd', function () {
       // A list of IDs of modules that should remain external to the bundle
       // See "external" in https://rollupjs.org/#core-functionality
       external: [
+        'jquery',
+        'selectize',
         '@angular/core',
         '@angular/common',
         '@angular/forms',

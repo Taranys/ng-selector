@@ -11,7 +11,10 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import jQuery from 'jquery';
+// rollup dirty fix : https://github.com/rollup/rollup/issues/1267
+import * as jqueryProxy from 'jquery';
+const jQuery: JQueryStatic = (<any> jqueryProxy).default || jqueryProxy
+
 import 'selectize';
 
 @Component({
