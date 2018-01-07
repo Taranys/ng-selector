@@ -7,11 +7,20 @@ Example available on : https://taranys.github.io/ng-selector/
 
 1. Install NgSelector
 
-  `npm i ng-selector jquery selectize @types/selectize`
+  `npm i ng-selector jquery selectize`
 
-2. Include Selectize CSS into your project
+2. Include dependencies into `angular.cli`
 
-  `node_modules/selectize/dist/css/selectize.bootstrap3.css`
+```json
+"styles": [
+  "../node_modules/selectize/dist/css/selectize.bootstrap3.css",
+  "styles.css"
+],
+"scripts": [
+  "../node_modules/jquery/dist/jquery.min.js",
+  "../node_modules/selectize/dist/js/standalone/selectize.js"
+],
+```
 
 3. Add NgSelectorModule as dependency
 
