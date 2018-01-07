@@ -40,7 +40,6 @@
   "homepage": "https://github.com/Taranys/ng-selector#readme",
   "dependencies": {
     "@types/jquery": "^2.0.37",
-    "@types/selectize": "^0.12.28",
     "jquery": "^3.2.1",
     "selectize": "^0.12.4"
   },

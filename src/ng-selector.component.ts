@@ -99,7 +99,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     const plugins = [].concat(this.plugins)
 
     // configure Selectize
-    this.selectize = jQuery(this.selector.nativeElement).selectize({
+    this.selectize = (jQuery(this.selector.nativeElement) as any).selectize({
       valueField: this.idField,
       labelField: this.labelField,
       searchField: this.labelField,
@@ -112,7 +112,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       render: render,
       plugins: plugins,
       onChange: this.dataChanged.bind(this)
-    } as Selectize.IOptions<any, any>)[0].selectize;
+    } as any)[0].selectize;
 
     // force form-control on
     jQuery(this.selector.nativeElement).siblings().find('.selectize-input').addClass('form-control');
