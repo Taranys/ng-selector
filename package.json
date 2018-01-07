@@ -1,6 +1,6 @@
 {
   "name": "ng-selector",
-  "version": "3.0.0-0",
+  "version": "3.0.0",
   "description": "Angular2 selector component based on selectize.js",
   "scripts": {
     "build": "gulp build",
