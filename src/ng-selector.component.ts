@@ -177,10 +177,11 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       return;
     }
 
-    this.selectize.addOption(data);
     if (Array.isArray(data)) {
+      this.manageOptions(data);
       this.selectize.setValue(data.map(item => item[this.idField]));
     } else if (data && typeof data === 'object') {
+      this.manageOption(data);
       this.selectize.setValue(data[this.idField]);
     }
   }
@@ -227,6 +228,25 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
 
   private checkMultipleFalsy () {
     return (this.multiple) ? null : 1;
+  }
+
+  private isAnOption (data) {
+    let isArealdyAnOption = false;
+
+    Object.keys(this.selectize.options).forEach(id => {
+      if (id === data[this.idField]) isArealdyAnOption = true;
+    });
+
+    return isArealdyAnOption;
+  }
+
+  private manageOptions (data: any[]) {
+    data.forEach(this.manageOption.bind(this));
+  }
+
+  private manageOption (data: any) {
+    if (this.isAnOption(data)) this.selectize.updateOption(data[this.idField], data);
+    else this.selectize.addOption(data);
   }
 
 }
