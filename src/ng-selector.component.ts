@@ -152,8 +152,8 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
   }
 
-  dataChanged (value) {
-    if (!value || !value.length) {
+  dataChanged (value: any) {
+    if (!value || !Array.isArray(value)) {
       return this.onChange(this.multiple ? [] : null);
     }
 
@@ -164,7 +164,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
         .map(this.cleanOrder);
       this.onChange(selectedValues);
     } else {
-      this.onChange(this.cleanOrder(this.selectize.options[value]));
+      this.onChange(this.cleanOrder(this.selectize.options[value as any]));
     }
   }
 
@@ -178,10 +178,10 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
 
     if (Array.isArray(data)) {
-      this.manageOptions(data);
+      this.optionsChanged(data);
       this.selectize.setValue(data.map(item => item[this.idField]));
     } else if (data && typeof data === 'object') {
-      this.manageOption(data);
+      this.optionsChanged([data]);
       this.selectize.setValue(data[this.idField]);
     }
   }
@@ -228,25 +228,6 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
 
   private checkMultipleFalsy () {
     return (this.multiple) ? null : 1;
-  }
-
-  private isAnOption (data) {
-    let isArealdyAnOption = false;
-
-    Object.keys(this.selectize.options).forEach(id => {
-      if (id === data[this.idField]) isArealdyAnOption = true;
-    });
-
-    return isArealdyAnOption;
-  }
-
-  private manageOptions (data: any[]) {
-    data.forEach(this.manageOption.bind(this));
-  }
-
-  private manageOption (data: any) {
-    if (this.isAnOption(data)) this.selectize.updateOption(data[this.idField], data);
-    else this.selectize.addOption(data);
   }
 
 }
