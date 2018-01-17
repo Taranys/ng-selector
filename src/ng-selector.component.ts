@@ -135,25 +135,14 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
         }
       });
 
-
-      // this.tagsComponent.options = options;
-      options.forEach(option => {
-        const value = option[this.idField];
-        // check if option exist to call the right method ... sorry ... -_-
-        if (this.selectize.options[value]) {
-          this.selectize.updateOption(value, option);
-        } else {
-          this.selectize.addOption(option);
-        }
-      });
-      this.selectize.refreshOptions(false);
+      this.addOrUpdateOptions(options);
     } else {
       this.tmpOptions = options;
     }
   }
 
-  dataChanged (value) {
-    if (!value || !value.length) {
+  dataChanged (value: any) {
+    if (!value || !Array.isArray(value)) {
       return this.onChange(this.multiple ? [] : null);
     }
 
@@ -164,7 +153,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
         .map(this.cleanOrder);
       this.onChange(selectedValues);
     } else {
-      this.onChange(this.cleanOrder(this.selectize.options[value]));
+      this.onChange(this.cleanOrder(this.selectize.options[value as any]));
     }
   }
 
@@ -177,10 +166,11 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       return;
     }
 
-    this.selectize.addOption(data);
     if (Array.isArray(data)) {
+      this.addOrUpdateOptions(data);
       this.selectize.setValue(data.map(item => item[this.idField]));
     } else if (data && typeof data === 'object') {
+      this.addOrUpdateOptions([data]);
       this.selectize.setValue(data[this.idField]);
     }
   }
@@ -227,6 +217,19 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
 
   private checkMultipleFalsy () {
     return (this.multiple) ? null : 1;
+  }
+
+  private addOrUpdateOptions (options) {
+    options.forEach(option => {
+      const value = option[this.idField];
+      // check if option exist to call the right method ... sorry ... -_-
+      if (this.selectize.options[value]) {
+        this.selectize.updateOption(value, option);
+      } else {
+        this.selectize.addOption(option);
+      }
+    });
+    this.selectize.refreshOptions(false);
   }
 
 }

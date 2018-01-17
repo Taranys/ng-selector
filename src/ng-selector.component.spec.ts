@@ -26,6 +26,7 @@ describe('Component: Selector', () => {
 
   const setOptions = (values) => { comp.options = values; fixture.detectChanges(); };
   const selectOption = (pos) => { (options().item(pos) as HTMLElement).click(); fixture.detectChanges(); };
+  const search = (searchInput) => el.querySelector('input').textContent = searchInput;
 
   beforeEach(async(() => {
     fixture = TestBed
@@ -113,6 +114,34 @@ describe('Component: Selector', () => {
       done();
     });
 
+  });
+
+  it('should support adding option when selected data changes', () => {
+    fixture.detectChanges();
+
+    comp['multiple'] = true;
+    comp.writeValue(simpleValues);
+
+    expect(options().length).toBe(5);
+    expect(options().item(0).textContent).toBe('1');
+  });
+
+  it('should support updating option when selected data changes', () => {
+    fixture.detectChanges();
+
+    comp['multiple'] = true;
+    comp.writeValue(simpleValues);
+
+    const notSoSimpleValues = [
+      { id: 1, label: '1 updated' },
+      { id: 2, label: '2' }
+    ];
+
+    comp.writeValue(notSoSimpleValues);
+    fixture.detectChanges();
+
+    expect(options().length).toBe(5);
+    expect(options().item(0).textContent).toBe('1 updated');
   });
 
   xit('should manage custom rendering', () => { });
