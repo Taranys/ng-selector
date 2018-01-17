@@ -132,6 +132,10 @@ describe('Component: Selector', () => {
     comp['multiple'] = true;
     comp.writeValue(simpleValues);
 
+    fixture.detectChanges();
+    expect(options().length).toBe(5);
+    expect(options().item(0).textContent).toBe('1');
+
     const notSoSimpleValues = [
       { id: 1, label: '1 updated' },
       { id: 2, label: '2' }

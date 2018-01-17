@@ -142,15 +142,17 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
   }
 
   dataChanged (value: any) {
-    if (!value || !Array.isArray(value)) {
+    if (!value || !value.length) {
       return this.onChange(this.multiple ? [] : null);
     }
 
     if (this.multiple) {
+      if (!Array.isArray(value)) return;
       const selectedValues = value
         .map(id => this.selectize.options[id])
         .filter(item => !!item)
         .map(this.cleanOrder);
+
       this.onChange(selectedValues);
     } else {
       this.onChange(this.cleanOrder(this.selectize.options[value as any]));
@@ -226,7 +228,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       if (this.selectize.options[value]) {
         this.selectize.updateOption(value, option);
       } else {
-        this.selectize.addOption(option);
+        this.selectize.registerOption(option);
       }
     });
     this.selectize.refreshOptions(false);

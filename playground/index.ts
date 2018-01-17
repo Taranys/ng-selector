@@ -32,7 +32,6 @@ import { NgSelectorModule } from 'ng-selector';
       <h2>With plugins</h2>
       <ng-selector
         [(ngModel)]="multipleSelection"
-        [options]="values"
         [plugins]="['remove_button']"
         multiple="true">
       </ng-selector>
@@ -43,7 +42,12 @@ import { NgSelectorModule } from 'ng-selector';
 })
 class AppComponent {
   selected = 'Second value';
-  multipleSelection = new Array<number>();
+  multipleSelection = [
+    { id: 1, label: 'First value' },
+    { id: 2, label: 'Second value' },
+    { id: 3, label: 'Another one' },
+    { id: 42, label: 'Best value' },
+  ];
 
   values = [
     { id: 1, label: 'First value' },
