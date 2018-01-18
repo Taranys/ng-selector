@@ -152,6 +152,29 @@ describe('Component: Selector', () => {
     expect(selected().item(0).textContent).toBe('1 updated');
   });
 
+  it('should emit the selected data as an object in single mode', () => {
+    setOptions(simpleValues);
+
+    spyOn(comp, 'onChange');
+    selectOption(0);
+
+    expect(comp.onChange).toHaveBeenCalledWith({ id: 1, label: '1' });
+  });
+
+
+  it('shoudl emit the selected data as an array in multiple mode', () => {
+    comp['multiple'] = true;
+    fixture.detectChanges();
+
+    setOptions(simpleValues);
+
+    spyOn(comp, 'onChange');
+    const partialValues = simpleValues.slice(0, 2);
+    comp.writeValue(partialValues);
+
+    expect(comp.onChange).toHaveBeenCalledWith(partialValues);
+  });
+
   xit('should manage custom rendering', () => { });
   xit('should support custom id field', () => { });
   xit('should support custom name field', () => { });
