@@ -147,7 +147,6 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
 
     if (this.multiple) {
-      if (!Array.isArray(value)) return;
       const selectedValues = value
         .map(id => this.selectize.options[id])
         .filter(item => !!item)
