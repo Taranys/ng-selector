@@ -26,6 +26,7 @@ describe('Component: Selector', () => {
 
   const setOptions = (values) => { comp.options = values; fixture.detectChanges(); };
   const selectOption = (pos) => { (options().item(pos) as HTMLElement).click(); fixture.detectChanges(); };
+  const search = (searchInput) => el.querySelector('input').textContent = searchInput;
 
   beforeEach(async(() => {
     fixture = TestBed
@@ -56,17 +57,29 @@ describe('Component: Selector', () => {
   });
 
   it('should change value when an option is selected', () => {
+    comp['multiple'] = true;
     setOptions(simpleValues);
     selectOption(2);
     expect(selected().item(0).textContent).toEqual(simpleValues[2].label);
   });
 
-  it('should select a default values', () => {
+  it('should be able to select a default value', () => {
     fixture.detectChanges();
+
     comp.writeValue(simpleValues[1]);
-    setOptions(simpleValues);
-    expect(options().length).toBe(simpleValues.length);
-    expect(selected().item(0).textContent).toEqual(simpleValues[1].label);
+
+    expect(selected().length).toBe(1)
+    expect(selected().item(0).textContent).toBe(simpleValues[1].label);
+  });
+
+  it('should be able to select default values', () => {
+    comp['multiple'] = true;
+    fixture.detectChanges();
+
+    comp.writeValue(simpleValues);
+
+    expect(selected().length).toBe(simpleValues.length);
+    expect(selected().item(0).textContent).toBe(simpleValues[0].label);
   });
 
   it('should return an array of values if multiple is enabled', () => {
@@ -113,6 +126,31 @@ describe('Component: Selector', () => {
       done();
     });
 
+  });
+
+  it('should support updating option when selected data changes', () => {
+    comp['multiple'] = true;
+    fixture.detectChanges();
+
+    setOptions(simpleValues);
+
+    expect(options().length).toBe(5);
+    expect(options().item(0).textContent).toBe('1');
+
+    selectOption(0);
+
+    expect(selected().item(0).textContent).toBe('1');
+
+    const notSoSimpleValues = [
+      { id: 1, label: '1 updated' },
+      { id: 2, label: '2' }
+    ];
+
+    comp.writeValue(notSoSimpleValues);
+    fixture.detectChanges();
+
+    expect(options().length).toBe(3);
+    expect(selected().item(0).textContent).toBe('1 updated');
   });
 
   xit('should manage custom rendering', () => { });

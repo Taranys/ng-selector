@@ -135,36 +135,27 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
         }
       });
 
-
-      // this.tagsComponent.options = options;
-      options.forEach(option => {
-        const value = option[this.idField];
-        // check if option exist to call the right method ... sorry ... -_-
-        if (this.selectize.options[value]) {
-          this.selectize.updateOption(value, option);
-        } else {
-          this.selectize.addOption(option);
-        }
-      });
-      this.selectize.refreshOptions(false);
+      this.addOrUpdateOptions(options);
     } else {
       this.tmpOptions = options;
     }
   }
 
-  dataChanged (value) {
+  dataChanged (value: any) {
     if (!value || !value.length) {
       return this.onChange(this.multiple ? [] : null);
     }
 
     if (this.multiple) {
+      if (!Array.isArray(value)) return;
       const selectedValues = value
         .map(id => this.selectize.options[id])
         .filter(item => !!item)
         .map(this.cleanOrder);
+
       this.onChange(selectedValues);
     } else {
-      this.onChange(this.cleanOrder(this.selectize.options[value]));
+      this.onChange(this.cleanOrder(this.selectize.options[value as any]));
     }
   }
 
@@ -178,10 +169,10 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     }
 
     if (Array.isArray(data)) {
-      this.manageOptions(data);
+      this.addOrUpdateOptions(data);
       this.selectize.setValue(data.map(item => item[this.idField]));
     } else if (data && typeof data === 'object') {
-      this.manageOption(data);
+      this.addOrUpdateOptions([data]);
       this.selectize.setValue(data[this.idField]);
     }
   }
@@ -230,23 +221,17 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
     return (this.multiple) ? null : 1;
   }
 
-  private isAnOption (data) {
-    let isArealdyAnOption = false;
-
-    Object.keys(this.selectize.options).forEach(id => {
-      if (id === data[this.idField]) isArealdyAnOption = true;
+  private addOrUpdateOptions (options) {
+    options.forEach(option => {
+      const value = option[this.idField];
+      // check if option exist to call the right method ... sorry ... -_-
+      if (this.selectize.options[value]) {
+        this.selectize.updateOption(value, option);
+      } else {
+        this.selectize.addOption(option);
+      }
     });
-
-    return isArealdyAnOption;
-  }
-
-  private manageOptions (data: any[]) {
-    data.forEach(this.manageOption.bind(this));
-  }
-
-  private manageOption (data: any) {
-    if (this.isAnOption(data)) this.selectize.updateOption(data[this.idField], data);
-    else this.selectize.addOption(data);
+    this.selectize.refreshOptions(false);
   }
 
 }
