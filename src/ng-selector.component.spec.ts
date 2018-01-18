@@ -152,7 +152,7 @@ describe('Component: Selector', () => {
     expect(selected().item(0).textContent).toBe('1 updated');
   });
 
-  fit('should emit the selected data as an object in single mode', () => {
+  it('should emit the selected data as an object in single mode', () => {
     setOptions(simpleValues);
 
     spyOn(comp, 'onChange');
@@ -162,7 +162,7 @@ describe('Component: Selector', () => {
   });
 
 
-  fit('shoudl emit the selected data as an array in multiple mode', () => {
+  it('shoudl emit the selected data as an array in multiple mode', () => {
     comp['multiple'] = true;
     fixture.detectChanges();
 
