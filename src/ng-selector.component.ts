@@ -228,7 +228,7 @@ export class NgSelectorComponent implements AfterViewInit, ControlValueAccessor 
       if (this.selectize.options[value]) {
         this.selectize.updateOption(value, option);
       } else {
-        this.selectize.registerOption(option);
+        this.selectize.addOption(option);
       }
     });
     this.selectize.refreshOptions(false);
