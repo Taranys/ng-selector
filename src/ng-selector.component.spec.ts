@@ -57,7 +57,6 @@ describe('Component: Selector', () => {
   });
 
   it('should change value when an option is selected', () => {
-    comp['multiple'] = true;
     setOptions(simpleValues);
     selectOption(2);
     expect(selected().item(0).textContent).toEqual(simpleValues[2].label);
