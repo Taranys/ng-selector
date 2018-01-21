@@ -2,6 +2,7 @@
   "name": "ng-selector",
   "version": "3.0.2",
   "description": "Angular2 selector component based on selectize.js",
+  "main": "dist/ng-selector.umd.js",
   "scripts": {
     "build": "gulp build",
     "build:watch": "gulp",
